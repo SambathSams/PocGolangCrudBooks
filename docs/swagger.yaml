@@ -1,0 +1,145 @@
+basePath: /
+definitions:
+  models.Book:
+    properties:
+      author:
+        example: Joseph Murphy
+        minLength: 2
+        type: string
+      id:
+        example: "2"
+        type: string
+      price:
+        example: 11.99
+        type: number
+      title:
+        example: The Power of your subconscious mind
+        minLength: 2
+        type: string
+    required:
+    - author
+    - id
+    - price
+    - title
+    type: object
+  models.UpdateBookInput:
+    properties:
+      author:
+        minLength: 2
+        type: string
+      price:
+        type: number
+      title:
+        minLength: 2
+        type: string
+    type: object
+info:
+  contact: {}
+  description: A sample CRUD APIs for managing books.
+  title: Book Management API
+  version: "1.0"
+paths:
+  /books:
+    get:
+      description: Responds with the list of all books as JSON.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Book'
+            type: array
+      summary: Get all books
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: Takes a JSON input and adds it to the book collection.
+      parameters:
+      - description: Add book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Book'
+      summary: Add a new book
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      description: Remove a book from the store by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Book not found
+      summary: Delete a book
+      tags:
+      - books
+    get:
+      description: Returns a single book based on the ID parameter.
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Book'
+        "404":
+          description: Not Found
+      summary: Get a book by ID
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Update the details of a book by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated book object
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateBookInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Invalid input
+        "404":
+          description: Book not found
+      summary: Update an existing book
+      tags:
+      - books
+swagger: "2.0"
