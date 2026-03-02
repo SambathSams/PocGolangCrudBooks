@@ -15,30 +15,30 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/books": {
+        "/projects": {
             "get": {
-                "description": "Responds with the list of all books as JSON.",
+                "description": "Responds with the list of all projects as JSON.",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "books"
+                    "projects"
                 ],
-                "summary": "Get all books",
+                "summary": "Get all projects",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Book"
+                                "$ref": "#/definitions/models.Project"
                             }
                         }
                     }
                 }
             },
             "post": {
-                "description": "Takes a JSON input and adds it to the book collection.",
+                "description": "Takes a JSON input and adds it to the project collection.",
                 "consumes": [
                     "application/json"
                 ],
@@ -46,17 +46,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "books"
+                    "projects"
                 ],
-                "summary": "Add a new book",
+                "summary": "Add a new project",
                 "parameters": [
                     {
-                        "description": "Add book",
-                        "name": "book",
+                        "description": "Add project",
+                        "name": "project",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Book"
+                            "$ref": "#/definitions/models.Project"
                         }
                     }
                 ],
@@ -64,26 +64,26 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.Book"
+                            "$ref": "#/definitions/models.Project"
                         }
                     }
                 }
             }
         },
-        "/books/{id}": {
+        "/projects/{id}": {
             "get": {
-                "description": "Returns a single book based on the ID parameter.",
+                "description": "Returns a single project based on the ID parameter.",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "books"
+                    "projects"
                 ],
-                "summary": "Get a book by ID",
+                "summary": "Get a project by ID",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Book ID",
+                        "description": "Project ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -93,7 +93,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Book"
+                            "$ref": "#/definitions/models.Project"
                         }
                     },
                     "404": {
@@ -102,7 +102,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Update the details of a book by its ID",
+                "description": "Update the details of a project by its ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -110,24 +110,24 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "books"
+                    "projects"
                 ],
-                "summary": "Update an existing book",
+                "summary": "Update an existing project",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Book ID",
+                        "description": "Project ID",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": "Updated book object",
-                        "name": "book",
+                        "description": "Updated project object",
+                        "name": "project",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.UpdateBookInput"
+                            "$ref": "#/definitions/models.UpdateProjectInput"
                         }
                     }
                 ],
@@ -135,27 +135,27 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Book"
+                            "$ref": "#/definitions/models.Project"
                         }
                     },
                     "400": {
                         "description": "Invalid input"
                     },
                     "404": {
-                        "description": "Book not found"
+                        "description": "Project not found"
                     }
                 }
             },
             "delete": {
-                "description": "Remove a book from the store by its ID",
+                "description": "Remove a project from the store by its ID",
                 "tags": [
-                    "books"
+                    "projects"
                 ],
-                "summary": "Delete a book",
+                "summary": "Delete a project",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Book ID",
+                        "description": "Project ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -166,53 +166,47 @@ const docTemplate = `{
                         "description": "No Content"
                     },
                     "404": {
-                        "description": "Book not found"
+                        "description": "Project not found"
                     }
                 }
             }
         }
     },
     "definitions": {
-        "models.Book": {
+        "models.Project": {
             "type": "object",
             "required": [
-                "author",
                 "id",
-                "price",
-                "title"
+                "name",
+                "task",
+                "taskType"
             ],
             "properties": {
-                "author": {
-                    "type": "string",
-                    "minLength": 2,
-                    "example": "Joseph Murphy"
-                },
                 "id": {
                     "type": "string",
                     "example": "2"
                 },
-                "price": {
-                    "type": "number",
-                    "example": 11.99
-                },
-                "title": {
+                "name": {
                     "type": "string",
                     "minLength": 2,
-                    "example": "The Power of your subconscious mind"
+                    "example": "Project2"
+                },
+                "task": {
+                    "type": "string",
+                    "minLength": 2,
+                    "example": "Keyword Spotting"
+                },
+                "taskType": {
+                    "type": "string",
+                    "minLength": 2,
+                    "example": "Audio"
                 }
             }
         },
-        "models.UpdateBookInput": {
+        "models.UpdateProjectInput": {
             "type": "object",
             "properties": {
-                "author": {
-                    "type": "string",
-                    "minLength": 2
-                },
-                "price": {
-                    "type": "number"
-                },
-                "title": {
+                "name": {
                     "type": "string",
                     "minLength": 2
                 }
@@ -227,7 +221,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Book Management API",
+	Title:            "Project Management API",
 	Description:      "A sample CRUD APIs for managing books.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

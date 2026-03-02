@@ -1,47 +1,43 @@
 basePath: /
 definitions:
-  models.Book:
+  models.Project:
     properties:
-      author:
-        example: Joseph Murphy
-        minLength: 2
-        type: string
       id:
         example: "2"
         type: string
-      price:
-        example: 11.99
-        type: number
-      title:
-        example: The Power of your subconscious mind
+      name:
+        example: Project2
+        minLength: 2
+        type: string
+      task:
+        example: Keyword Spotting
+        minLength: 2
+        type: string
+      taskType:
+        example: Audio
         minLength: 2
         type: string
     required:
-    - author
     - id
-    - price
-    - title
+    - name
+    - task
+    - taskType
     type: object
-  models.UpdateBookInput:
+  models.UpdateProjectInput:
     properties:
-      author:
-        minLength: 2
-        type: string
-      price:
-        type: number
-      title:
+      name:
         minLength: 2
         type: string
     type: object
 info:
   contact: {}
   description: A sample CRUD APIs for managing books.
-  title: Book Management API
+  title: Project Management API
   version: "1.0"
 paths:
-  /books:
+  /projects:
     get:
-      description: Responds with the list of all books as JSON.
+      description: Responds with the list of all projects as JSON.
       produces:
       - application/json
       responses:
@@ -49,37 +45,37 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Book'
+              $ref: '#/definitions/models.Project'
             type: array
-      summary: Get all books
+      summary: Get all projects
       tags:
-      - books
+      - projects
     post:
       consumes:
       - application/json
-      description: Takes a JSON input and adds it to the book collection.
+      description: Takes a JSON input and adds it to the project collection.
       parameters:
-      - description: Add book
+      - description: Add project
         in: body
-        name: book
+        name: project
         required: true
         schema:
-          $ref: '#/definitions/models.Book'
+          $ref: '#/definitions/models.Project'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.Book'
-      summary: Add a new book
+            $ref: '#/definitions/models.Project'
+      summary: Add a new project
       tags:
-      - books
-  /books/{id}:
+      - projects
+  /projects/{id}:
     delete:
-      description: Remove a book from the store by its ID
+      description: Remove a project from the store by its ID
       parameters:
-      - description: Book ID
+      - description: Project ID
         in: path
         name: id
         required: true
@@ -88,14 +84,14 @@ paths:
         "204":
           description: No Content
         "404":
-          description: Book not found
-      summary: Delete a book
+          description: Project not found
+      summary: Delete a project
       tags:
-      - books
+      - projects
     get:
-      description: Returns a single book based on the ID parameter.
+      description: Returns a single project based on the ID parameter.
       parameters:
-      - description: Book ID
+      - description: Project ID
         in: path
         name: id
         required: true
@@ -106,40 +102,40 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Book'
+            $ref: '#/definitions/models.Project'
         "404":
           description: Not Found
-      summary: Get a book by ID
+      summary: Get a project by ID
       tags:
-      - books
+      - projects
     put:
       consumes:
       - application/json
-      description: Update the details of a book by its ID
+      description: Update the details of a project by its ID
       parameters:
-      - description: Book ID
+      - description: Project ID
         in: path
         name: id
         required: true
         type: string
-      - description: Updated book object
+      - description: Updated project object
         in: body
-        name: book
+        name: project
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateBookInput'
+          $ref: '#/definitions/models.UpdateProjectInput'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Book'
+            $ref: '#/definitions/models.Project'
         "400":
           description: Invalid input
         "404":
-          description: Book not found
-      summary: Update an existing book
+          description: Project not found
+      summary: Update an existing project
       tags:
-      - books
+      - projects
 swagger: "2.0"

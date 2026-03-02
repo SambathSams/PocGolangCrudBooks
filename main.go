@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @title           Book Management API
+// @title           Project Management API
 // @version         1.0
 // @description     A sample CRUD APIs for managing books.
 // @BasePath        /
@@ -21,7 +21,7 @@ func main() {
 
 	router := gin.Default()
 
-	routes.RegisterBookRoutes(router)
+	routes.RegisterProjectRoutes(router)
 	routes.RegisterSwaggerRoutes(router)
 
 	logger.Info("Running in %s mode on port %s", cfg.Env, cfg.Port)
